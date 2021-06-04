@@ -397,19 +397,6 @@ describe("MultipleWinners", function() {
         await prizeStrategy.distribute(90);
       });
 
-      it("should award prize splits to multiple targets", async () => {
-        await prizePool.mock.captureAwardBalance.returns(toWei("9"));
-        await prizePool.mock.award
-          .withArgs(wallet.address, toWei("3"), ticket.address)
-          .returns();
-        await prizePool.mock.award
-          .withArgs(wallet2.address, toWei("3"), ticket.address)
-          .returns();
-
-        await prizeStrategy.setNumberOfWinners(3);
-        await prizeStrategy.distribute(90);
-      });
-
       describe("when external erc20 awards are distributed", () => {
         beforeEach(async () => {
           await externalERC20Award.mock.totalSupply.returns(0);
