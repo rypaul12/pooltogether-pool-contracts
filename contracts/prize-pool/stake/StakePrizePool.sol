@@ -2,11 +2,13 @@
 
 pragma solidity >=0.6.0 <0.7.0;
 
+import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 
 import "../PrizePool.sol";
 
 contract StakePrizePool is PrizePool {
+  using AddressUpgradeable for address;
 
   IERC20Upgradeable private stakeToken;
 
@@ -33,6 +35,8 @@ contract StakePrizePool is PrizePool {
       _maxExitFeeMantissa,
       _maxTimelockDuration
     );
+
+    require(address(_stakeToken).isContract(), "StakePrizePool/stake-token-not-contract-address");
     stakeToken = _stakeToken;
 
     emit StakePrizePoolInitialized(address(stakeToken));
